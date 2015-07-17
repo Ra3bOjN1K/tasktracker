@@ -1,0 +1,51 @@
+@import 'compass';
+
+@mixin clearfix {
+  zoom: 1;
+
+  &:before,
+  &:after {
+    content: '\0020';
+    display: block;
+    height: 0;
+    overflow: hidden;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+@mixin noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+@mixin init-flex-position($align: row) {
+  @if $align == row {
+    @include flexbox((
+            display: box,
+            box-orient: horizontal
+    ), $version: 1);
+  }@else if $align == column {
+    @include flexbox((
+            display: box,
+            box-orient: vertical
+    ), $version: 1);
+  }
+  @include flexbox((
+          display: flexbox,
+          flex-direction: $align
+  ), $version: 2);
+  @include flexbox((
+          display: flex,
+          flex-direction: $align
+  ));
+}
+
+$body-background-color: #efefef;

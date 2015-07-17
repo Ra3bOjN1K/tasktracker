@@ -1,0 +1,184 @@
+{% extends "tracker/bbase.html" %}
+{% load static %}
+
+{% block extrastyle %}
+	<link rel="stylesheet" type="text/css" href="{% static "tracker/css/projects.css" %}"/>
+{% endblock %}
+
+{% block page-content %}
+
+	{% if not user.is_anonymous %}
+		<div class="projects">
+			{% if 'tracker.create_project' in permissions %}
+				<div class="project_control_panel">
+					<a class="add_project_btn" href="{% url 'tracker:create_project' %}">Add project</a>
+				</div>
+			{% endif %}
+			<div class="projects_container">
+				<span class="projects_title">Projects:</span>
+				{% for project in projects %}
+					{% ifequal project.id|slugify current_project_id %}
+						<a class="project_item__checked"
+						   href="{% url 'tracker:project_details' project.id %}">{{ project.name }}</a>
+					{% else %}
+						<a class="project_item" href="{% url 'tracker:project_details' project.id %}">{{ project.name }}</a>
+					{% endifequal %}
+				{% endfor %}
+			</div>
+		</div>
+	{% endif %}
+
+	<div class="projects_control">
+		{% if dev_search_form and 'tracker.add_developer' in permissions %}
+			<div class="members_search">
+				<div class="panel__title">Search developers</div>
+				<form action="{% url 'tracker:search_developers' %}?referer={{ request.path }}" method="post">
+					{% csrf_token %}
+					{{ dev_search_form }}
+					<button type="submit">Search</button>
+				</form>
+			</div>
+			<div class="member_result_container">
+				{% if search_dev_result %}
+					{% for dev in search_dev_result %}
+						{% with ""|add:dev.user.first_name|add:" "|add:dev.user.last_name as user_full_name %}
+							<div class="dev_item">
+								<span class="user_name">{{ user_full_name }}</span>
+								{% if dev.user in project_developers %}
+									<a href="{% url "tracker:del_dev_from_project" current_project_id dev.id %}?referer={{ request.path }}"
+									   class="delete_from_project">Delete from project</a>
+								{% else %}
+									<a href="{% url "tracker:add_dev_to_project" current_project_id dev.id %}?referer={{ request.path }}"
+									   class="add_to_project">Add to project</a>
+								{% endif %}
+							</div>
+						{% endwith %}
+					{% endfor %}
+				{% elif project_developers %}
+					{% for dev in project_developers %}
+						{% with ""|add:dev.first_name|add:" "|add:dev.last_name as user_full_name %}
+							<div class="dev_item">
+								<span class="user_name">{{ user_full_name }}</span>
+								{% if dev in project_developers %}
+									<a href="{% url "tracker:del_dev_from_project" current_project_id dev.id %}?referer={{ request.path }}"
+									   class="delete_from_project">Delete from project</a>
+								{% endif %}
+							</div>
+						{% endwith %}
+					{% endfor %}
+				{% else %}
+					<div class="dev_not_found">List of developers is empty...</div>
+				{% endif %}
+			</div>
+		{% endif %}
+
+		{% if create_task_form %}
+			<div class="task_create_form">
+				<div class="panel__title">Create task</div>
+				<form action="{% url "tracker:create_task" current_project_id %}?referer={{ request.path }}" method="post">
+					{% csrf_token %}
+					<div class="task_name__label">{{ create_task_form.name.label }}:</div>
+					<div class="task_name">{{ create_task_form.name }}</div>
+					<div class="task_desc__label">{{ create_task_form.description.label }}:</div>
+					<div class="task_desc">{{ create_task_form.description }}</div>
+					<div class="task_status__label">{{ create_task_form.status.label }}:</div>
+					<div class="task_status">{{ create_task_form.status }}</div>
+
+					{% if "tracker.attach_task_to_developer" in permissions %}
+						<div class="task_executor__label">{{ create_task_form.executor.label }}:</div>
+						<div class="task_executor">{{ create_task_form.executor }}</div>
+					{% endif %}
+
+					<div class="task_status__errors">{{ create_task_form.non_field_errors }}</div>
+
+					<br>
+					<button type="submit">Create task</button>
+				</form>
+			</div>
+		{% endif %}
+	</div>
+
+	<div class="tasks">
+		{% if create_task_form %}
+			<div class="tasks_container">
+				{% if 'tracker.filter_tasks' in permissions %}
+					<div class="tasks_control_panel">
+						<a class="show_tasks_btn" id="my_tasks">My tasks</a>
+						<a class="show_tasks_btn__checked" id="all_tasks">All tasks</a>
+					</div>
+				{% endif %}
+
+				{% if project_tasks %}
+					<div class="task_list">
+						{% for task in project_tasks %}
+							<div class="task_item">
+								<div class="task_item__title">
+									<span class="task__name">{{ task.name|truncatechars_html:40 }}</span>
+									<span class="task__created">{{ task.created|date:"d-m-Y H:m:s" }}</span>
+								</div>
+								<span class="task__desc__title">Short description: </span>
+								<span class="task__description">{{ task.description|truncatechars_html:120 }}</span>
+
+								<div class="task_slug_info">
+									<span class="task__executors__title">Executor: </span>
+									{% if task.executors %}
+										<div class="task__executors">
+											{% for executor in task.executors.all %}
+												{{ executor.username }}
+											{% endfor %}
+										</div>
+									{% endif %}
+									<span class="task__creator">
+										<span class="task__creator__title">Author: </span> {{ task.creator }}
+									</span>
+									<span class="task__status">
+										<span class="task__status__title">Status: </span> {{ task.get_verbose_status_val }}
+									</span>
+								</div>
+								<a class="task_detail" href="{% url "tracker:task_details_view" task.id %}">Details</a>
+							</div>
+						{% endfor %}
+					</div>
+				{% else %}
+					<div class="empty_task_list">Empty task list...</div>
+				{% endif %}
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
+
+{% block extrascripts %}
+	<script type="text/javascript" src="{% static "tracker/js/task_tracker_scripts.js" %}"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			(function ($, undefined) {
+
+				function updateTaskList($filter) {
+					$.post("/tasks/", {filter: $filter, project_id: "{{ current_project_id }}"}, function (task_list) {
+						$('div.task_list').html(buildTaskList(task_list));
+						initTaskFiltersEvents();
+					});
+				}
+
+				function initTaskFiltersEvents() {
+					if ($("div").hasClass("empty_task_list")) {
+						$(".show_tasks_btn").attr("class", "show_tasks_btn__checked");
+						return;
+					}
+					$.each(["my_tasks", "all_tasks"], function (index, value) {
+						$("#" + value).on("click", function (event) {
+							if ($(this).hasClass('show_tasks_btn')) {
+								$(".show_tasks_btn__checked").attr("class", "show_tasks_btn");
+								$(this).attr('class', 'show_tasks_btn__checked');
+								updateTaskList(this.id);
+							}
+						});
+					});
+				}
+
+				initTaskFiltersEvents();
+
+			})(jQuery);
+		});
+	</script>
+{% endblock %}

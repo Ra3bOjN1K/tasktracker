@@ -1,0 +1,182 @@
+{% extends "tracker/bbase.html" %}
+{% load static %}
+
+{% block extrastyle %}
+	<link rel="stylesheet" type="text/css" href="{% static "tracker/css/task_details.css" %}"/>
+{% endblock %}
+
+{% block page-content %}
+
+	<a class="prev_page_btn" href="{% url "tracker:project_details" project_id %}">
+		<img src="{% static "tracker/img/back-24.png" %}">
+		BACK
+	</a>
+
+	<div class="task_container">
+
+		<div class="task_details">
+
+			<div class="task_details__title">
+				{{ task_details.name }}
+			</div>
+
+			<div class="task_details__description">
+				<div class="task_details__description__title">
+					<span>Description: </span>
+					<hr/>
+				</div>
+				{{ task_details.description }}
+			</div>
+
+			<div class="task_details__info">
+				<span class="task__executors__title">Executor: </span>
+				{% if task_details.executors %}
+					<div class="task__executors">
+						{% for executor in task_details.executors.all %}
+							{{ executor.username }}
+						{% endfor %}
+					</div>
+				{% endif %}
+
+				<span class="task__creator">
+					<span class="task__creator__title">Author: </span> {{ task_details.creator }}
+				</span>
+
+
+				<span class="task__status__title">Status: </span>
+				<span class="task__status">
+					{% for key, value in statuses_dict.items %}
+						{% ifequal value task_details.get_verbose_status_val %}
+							<a class="task__status__item__active" id="{{ key }}">{{ value }}</a>
+						{% else %}
+							<a class="task__status__item" id="{{ key }}">{{ value }}</a>
+						{% endifequal %}
+					{% endfor %}
+				</span>
+
+			</div>
+		</div>
+
+		<hr />
+
+		<div class="comments_container">
+			<div class="create_comment_form">
+				<div class="comments_counter">
+					{{ comments|length }} comment(s)
+				</div>
+
+				<form action="{% url "tracker:add_comment_view" task_details.id %}" method="post">
+					{% csrf_token %}
+					{{ create_comment_form.text }}
+					<input type="submit" name="submit" value="Add comment" id="add_comment_submit">
+				</form>
+
+			</div>
+			<div class="comments">
+				{% if comments %}
+					{% for comment in comments %}
+						<div class="comment_item" id="comment_{{ comment.id }}">
+							<div class="comment_item__title">
+								<div class="comment_item__title__author">
+									{{ comment.author }}
+								</div>
+								<span class="title_separator">&#9210;</span>
+
+								<div class="comment_item__title__created">
+									{{ comment.created|date:"d-m-Y H:m:s" }}
+								</div>
+								<div class="comment_item__title__control_block">
+									<a class="edit_comment_btn">
+										<img src="{% static "tracker/img/edit-16.png" %}"/></a>
+									<a class="del_comment_btn" href="{% url "tracker:del_comment_view" task_details.id comment.id %}">
+										<img src="{% static "tracker/img/delete-16.png" %}"/></a>
+								</div>
+							</div>
+							<div class="comment_item__body">
+								{{ comment.text }}
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="note_no_comments">There are no comments yet ...</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block extrascripts %}
+	<script type="text/javascript" src="{% static "tracker/js/task_tracker_scripts.js" %}"></script>
+	<script type="text/javascript" src="{% static "tracker/js/autosize.min.js" %}"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			(function ($, undefined) {
+
+				$(function() {
+					$(".edit_comment_btn").on('click', function(e) {
+						var $comment = $(this).parents('div.comment_item').first();
+						$(".edit_comment_form").html('');
+
+						var $form_html = "<form class='edit_comment_form' action='' method='post'>" +
+										"{% csrf_token %}" +
+										"<textarea name='text' style='resize:none'></textarea>" +
+										"<div class='edit_comments_form__btns'>" +
+										"<a id='edit_comment_submit'>Edit</a>" +
+										"<a id='edit_comment_cancel'>Cancel</a>" +
+										"</div>" +
+										"</form>";
+
+						$('body').append('<div class="editable_comment hidden"></div>');
+
+						var $hiddenDiv = $('.editable_comment');
+						$hiddenDiv.append($comment.find(".comment_item__body").text().trim());
+						$comment.find('.comment_item__body').html($form_html);
+						$('.comment_item__title__control_block').addClass('hidden');
+						$(".edit_comment_form textarea").val($hiddenDiv.text());
+						autosize($('textarea'));
+
+						$("#edit_comment_cancel").on('click', function(e) {
+							var $comment = $(this).parents('div.comment_item').first();
+							var $hiddenDiv = $('.editable_comment');
+							$comment.find('.comment_item__body').html($hiddenDiv.text());
+							$hiddenDiv.remove();
+							$('.comment_item__title__control_block').removeClass('hidden');
+						});
+
+						$("#edit_comment_submit").on('click', function(e) {
+							var $comment = $(this).parents('div.comment_item').first(),
+											$comment_id = /comment_([^\s]+)/.exec($comment.attr('id'))[1];
+
+							$.post("/comment/edit/", {comment_id: $comment_id,
+								comment_body: $(".edit_comment_form textarea").val()}, function (result) {
+
+								if(result['status'] === 'success') {
+									$comment.find('.comment_item__body').html(result['comment_body']);
+									$('.comment_item__title__control_block').removeClass('hidden');
+									$('.editable_comment').remove();
+								}
+							});
+						});
+					});
+				});
+
+				$(function() {
+					$("a[class^='task__status__item']").on('click', function(e) {
+						if($(this).hasClass('task__status__item__active')) {
+							return;
+						}
+						var $id = $(this).attr('id');
+						$.post("/task/status-update/", {task_id: "{{ task_details.id }}", status: $id}, function (result) {
+							if(result === 'success') {
+								$(".task__status__item__active").attr('class', 'task__status__item');
+								$("#" + $id).attr('class', 'task__status__item__active');
+							}
+						});
+					});
+				});
+				autosize($('textarea'));
+
+			})(jQuery);
+		});
+	</script>
+{% endblock %}

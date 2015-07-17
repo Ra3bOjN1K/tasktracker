@@ -1,0 +1,80 @@
+@font-face {
+    font-family: 'andadaregular';
+    src: url('andada-regular.eot');
+    src: url('andada-regular.eot?#iefix') format('embedded-opentype'),
+         url('andada-regular.woff') format('woff'),
+         url('andada-regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'andadabold';
+    src: url('andada-bold.eot');
+    src: url('andada-bold.eot?#iefix') format('embedded-opentype'),
+         url('andada-bold.woff') format('woff'),
+         url('andada-bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'andadabold_italic';
+    src: url('andada-bolditalic.eot');
+    src: url('andada-bolditalic.eot?#iefix') format('embedded-opentype'),
+         url('andada-bolditalic.woff') format('woff'),
+         url('andada-bolditalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'andadaitalic';
+    src: url('andada-italic.eot');
+    src: url('andada-italic.eot?#iefix') format('embedded-opentype'),
+         url('andada-italic.woff') format('woff'),
+         url('andada-italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'andada_scregular';
+    src: url('andadasc-regular.eot');
+    src: url('andadasc-regular.eot?#iefix') format('embedded-opentype'),
+         url('andadasc-regular.woff') format('woff'),
+         url('andadasc-regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'andada_scbold';
+    src: url('andadasc-bold.eot');
+    src: url('andadasc-bold.eot?#iefix') format('embedded-opentype'),
+         url('andadasc-bold.woff') format('woff'),
+         url('andadasc-bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'andada_scbold_italic';
+    src: url('andadasc-bolditalic.eot');
+    src: url('andadasc-bolditalic.eot?#iefix') format('embedded-opentype'),
+         url('andadasc-bolditalic.woff') format('woff'),
+         url('andadasc-bolditalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'andada_scitalic';
+    src: url('andadasc-italic.eot');
+    src: url('andadasc-italic.eot?#iefix') format('embedded-opentype'),
+         url('andadasc-italic.woff') format('woff'),
+         url('andadasc-italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

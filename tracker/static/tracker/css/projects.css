@@ -1,0 +1,542 @@
+.projects {
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  display: -ms-flexbox;
+  -ms-flex-direction: column;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  -webkit-flex: 1 1;
+  flex: 1 1;
+  -moz-box-shadow: 0.3px 0.3px 2px 0.3px #ddd;
+  -webkit-box-shadow: 0.3px 0.3px 2px 0.3px #ddd;
+  box-shadow: 0.3px 0.3px 2px 0.3px #ddd;
+}
+
+.projects_control {
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  display: -ms-flexbox;
+  -ms-flex-direction: column;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  -webkit-flex: 1 1;
+  flex: 1 1;
+  margin: 0 10px 0 20px;
+  min-width: 320px;
+}
+
+.tasks {
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  display: -ms-flexbox;
+  -ms-flex-direction: column;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  -webkit-flex: 3 3;
+  flex: 3 3;
+  min-height: 560px;
+  min-width: 600px;
+}
+
+.project_control_panel {
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  display: -ms-flexbox;
+  -ms-flex-direction: row;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  -moz-box-shadow: 0 1px 2px 0.5px #777;
+  -webkit-box-shadow: 0 1px 2px 0.5px #777;
+  box-shadow: 0 1px 2px 0.5px #777;
+  background: #6A7C9C;
+  border: 1px solid #666;
+  padding: 4px 4px 12px 4px;
+  z-index: 1;
+}
+.project_control_panel .add_project_btn {
+  -webkit-flex: 1 1;
+  flex: 1 1;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -moz-box-shadow: 0.5px 0.5px 2px 0.5px #555;
+  -webkit-box-shadow: 0.5px 0.5px 2px 0.5px #555;
+  box-shadow: 0.5px 0.5px 2px 0.5px #555;
+  background: #79A67D;
+  border: 1px solid #679a6b;
+  border-radius: 2px;
+  color: #eee;
+  font-size: 13pt;
+  font-weight: 700;
+  padding: 8px 40px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.projects_container {
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  display: -ms-flexbox;
+  -ms-flex-direction: column;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  -webkit-flex: 1 1;
+  flex: 1 1;
+  background: #fafafa;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding-top: 10px;
+}
+.projects_container .projects_title {
+  color: #666;
+  font-size: 11pt;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  text-decoration: underline;
+}
+.projects_container .project_item {
+  -moz-box-shadow: 0.5px 0.5px 0.6px 0.3px #ddd;
+  -webkit-box-shadow: 0.5px 0.5px 0.6px 0.3px #ddd;
+  box-shadow: 0.5px 0.5px 0.6px 0.3px #ddd;
+}
+.projects_container .project_item, .projects_container .project_item__checked {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  background: #ddd;
+  border: 1px solid #bbb;
+  color: #666;
+  margin: 2px 8px;
+  padding: 6px;
+  text-align: center;
+  text-decoration: none;
+}
+.projects_container .project_item__checked {
+  background: #BDC2C9;
+  border: 1px solid #acb2bb;
+  color: #888;
+}
+
+.members_search {
+  background: white;
+  border: 1px solid #ccc;
+  margin-bottom: 6px;
+  min-height: 80px;
+}
+.members_search form {
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  display: -ms-flexbox;
+  -ms-flex-direction: row;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  margin: 16px 20px;
+}
+.members_search form input {
+  -webkit-flex: 1 1;
+  flex: 1 1;
+  margin-right: 10px;
+}
+.members_search button {
+  color: #666;
+}
+
+.member_result_container {
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  display: -ms-flexbox;
+  -ms-flex-direction: column;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border: 1px solid #ccc;
+  margin-bottom: 6px;
+  min-height: 160px;
+  padding: 3px 0;
+}
+.member_result_container .dev_not_found {
+  -webkit-flex: 1 1;
+  flex: 1 1;
+  color: #666;
+  margin: auto;
+  max-height: 20px;
+}
+.member_result_container .dev_item {
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  display: -ms-flexbox;
+  -ms-flex-direction: row;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  align-items: center;
+  background: #eee;
+  border: 1px solid #bbb;
+  border-radius: 2px;
+  color: #315085;
+  font-size: 10pt;
+  margin: 3px 6px;
+  padding: 4px;
+}
+.member_result_container .dev_item .add_to_project {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  background: #7DB07D;
+  border: 1px solid #6aa46a;
+  color: white;
+  font-size: 10pt;
+  padding: 2px;
+  text-decoration: none;
+}
+.member_result_container .dev_item .delete_from_project {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  background: #EBA0A0;
+  border: 1px solid #e68787;
+  color: white;
+  font-size: 10pt;
+  padding: 2px;
+  text-decoration: none;
+}
+
+.task_create_form {
+  background: white;
+  border: 1px solid #ccc;
+  min-height: 290px;
+}
+.task_create_form form {
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  display: -ms-flexbox;
+  -ms-flex-direction: column;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+.task_create_form form input, .task_create_form form textarea, .task_create_form form select {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #666;
+  margin-bottom: 4px;
+  width: 100%;
+}
+.task_create_form form button {
+  color: #666;
+  margin: 20px auto 6px;
+  padding: 4px;
+  width: 244px;
+}
+.task_create_form .task_name__label {
+  color: #666;
+  font-size: 10pt;
+  margin-left: 4px;
+  text-decoration: underline;
+}
+.task_create_form .task_desc__label {
+  color: #666;
+  font-size: 10pt;
+  margin-left: 4px;
+  text-decoration: underline;
+}
+.task_create_form .task_status__label {
+  color: #666;
+  font-size: 10pt;
+  margin-left: 4px;
+  text-decoration: underline;
+}
+.task_create_form .task_executor__label {
+  color: #666;
+  font-size: 10pt;
+  margin-left: 4px;
+  text-decoration: underline;
+}
+.task_create_form .task_status {
+  margin-bottom: 4px;
+}
+
+.panel__title {
+  background: #8297BA;
+  border: 1px solid #666;
+  color: white;
+  font-size: 10pt;
+  margin: 1px -2px;
+  padding: 2px;
+}
+
+.tasks_control_panel {
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  display: -ms-flexbox;
+  -ms-flex-direction: row;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+  background: #8297BA;
+  border: 1px solid #4c638a;
+  height: 36px;
+  margin: 2px 2px 16px;
+}
+.tasks_control_panel .show_tasks_btn, .tasks_control_panel .show_tasks_btn__checked {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  background: #eee;
+  border: 1px solid #666;
+  color: #666;
+  cursor: pointer;
+  cursor: hand;
+  margin-right: 4px;
+  padding: 6px;
+  text-decoration: none;
+}
+.tasks_control_panel .show_tasks_btn__checked {
+  background: #65728A;
+  border: 1px solid #666;
+  color: #bbb;
+  cursor: default;
+}
+
+.tasks_container {
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  display: -ms-flexbox;
+  -ms-flex-direction: column;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  -webkit-flex: 1 1;
+  flex: 1 1;
+  background: white;
+  border: 1px solid #ccc;
+  margin: 0 10px;
+}
+.tasks_container .empty_task_list {
+  -webkit-align-self: center;
+  align-self: center;
+  background: #f6f6f6;
+  border: 1px solid #e7e7e7;
+  border-radius: 2px;
+  color: #666;
+  font-size: 13pt;
+  margin-top: 24px;
+  padding: 12px 96px;
+  text-align: center;
+}
+
+.task_item {
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  display: -ms-flexbox;
+  -ms-flex-direction: column;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  -moz-box-shadow: 0.3px 0.3px 1.5px 0.2px #ddd;
+  -webkit-box-shadow: 0.3px 0.3px 1.5px 0.2px #ddd;
+  box-shadow: 0.3px 0.3px 1.5px 0.2px #ddd;
+  background: #f8f8f8;
+  border: 1px solid #ccc;
+  height: 148px;
+  margin: 18px 12px;
+}
+.task_item .task_item__title {
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  display: -ms-flexbox;
+  -ms-flex-direction: row;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  align-items: center;
+  background: #6A81A8;
+  border-bottom: 1px solid #888;
+  color: white;
+  height: 16px;
+}
+.task_item .task_item__title .task__name {
+  font-size: 11pt;
+  font-weight: bold;
+  margin-left: 8px;
+}
+.task_item .task_item__title .task__created {
+  background: #eee;
+  border: 1px solid #888;
+  color: #666;
+  font-size: 9pt;
+  line-height: 1;
+  padding: 1px;
+}
+.task_item .task__desc__title {
+  color: #666;
+  font-size: 9pt;
+  line-height: 1;
+  margin: 4px 0 2px 10px;
+}
+.task_item .task__description {
+  -webkit-flex: 1 1;
+  flex: 1 1;
+  background: #fcfcfc;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  color: #444;
+  font-size: 11pt;
+  margin: 0 8px 4px;
+  padding: 2px;
+}
+.task_item .task_slug_info {
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  display: -ms-flexbox;
+  -ms-flex-direction: row;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  -webkit-align-items: center;
+  align-items: center;
+  background: #eee;
+  border: 1px solid #ccc;
+  margin: 8px;
+}
+.task_item .task__executors__title {
+  color: #666;
+  font-size: 10pt;
+  line-height: 1;
+  margin-left: 6px;
+}
+.task_item .task__executors {
+  -webkit-flex: 1 1;
+  flex: 1 1;
+  color: #4D7FDB;
+  font-size: 10pt;
+  line-height: 1;
+  margin-left: 6px;
+  padding: 2px;
+}
+.task_item .task__creator__title {
+  color: #666;
+  font-size: 10pt;
+}
+.task_item .task__creator {
+  color: #E36666;
+  font-size: 10pt;
+  line-height: 1;
+  margin-left: 6px;
+  padding: 2px;
+}
+.task_item .task__status__title {
+  color: #666;
+  font-size: 10pt;
+  line-height: 1;
+  margin-left: 6px;
+}
+.task_item .task__status {
+  color: #D4A12A;
+  font-size: 11pt;
+  line-height: 1;
+  margin-left: 6px;
+  padding: 2px;
+}
+.task_item .task_detail {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-align-self: flex-end;
+  align-self: flex-end;
+  background: #79B06F;
+  border: 1px solid #5e9854;
+  color: white;
+  font-size: 10pt;
+  margin: 2px;
+  padding: 1px 2px;
+  text-decoration: none;
+}

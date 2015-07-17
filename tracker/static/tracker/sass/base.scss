@@ -1,0 +1,48 @@
+@import 'compass';
+@import 'settings';
+
+
+body {
+  @include clearfix;
+  @include init-flex-position(column);
+  background: $body-background-color;
+  font-family: 'Andada SC', andadaregular, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.nav_menu {
+  @include init-flex-position(row);
+  @include justify-content(space-between);
+  @include align-items(center);
+  @include single-box-shadow(0, 1px, 2px, .5px, #666);
+  background: #485B85;
+  border: 1px solid #323E57;
+  height: 48px;
+  margin-bottom: 10px;
+
+  .logo {
+    color: #eee;
+    font-family: "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+    font-size: 18pt;
+    font-weight: 700;
+    margin-left: 16px;
+  }
+
+  .user-control-panel {
+    margin-right: 16px;
+
+    .ctrl-btn {
+      @include noselect;
+      background: #E0BD84;
+      border: 1px solid #666;
+      color: #315085;
+      padding: 6px;
+      text-decoration: none;
+    }
+  }
+}
+
+.page-content {
+  @include init-flex-position(row);
+}

@@ -1,0 +1,287 @@
+@import 'settings';
+
+.prev_page_btn {
+  @include init-flex-position(row);
+  @include align-items(center);
+  @include single-box-shadow(.3px, .3px, 2px, .3px, #aaa);
+  background: #666;
+  border: 1px solid #444;
+  color: white;
+  height: 24px;
+  padding: 6px;
+  position: fixed;
+  text-decoration: none;
+  width: 80px;
+
+  img {
+    margin-right: 8px;
+  }
+}
+
+.task_container {
+  @include init-flex-position(column);
+  margin: 24px auto;
+  max-width: 960px;
+  min-width: 960px;
+}
+
+.task_details {
+  @include init-flex-position(row);
+  @include flex-wrap(wrap);
+
+  .task_details__title {
+    color: #A3815D;
+    font-size: 16pt;
+    font-weight: bolder;
+    margin: 0 30px 24px 30px;
+    min-width: 900px;
+    text-decoration: underline;
+  }
+
+  .task_details__description {
+    background: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #444;
+    min-height: 280px;
+    padding: 8px 30px 30px;
+    text-align: justify;
+    text-indent: 1.5em;
+
+    .task_details__description__title {
+      color: #7B8FB3;
+      font-size: 11pt;
+      text-align: start;
+      text-indent: 0;
+    }
+
+    hr {
+      color: #7B8FB3;
+      margin: 0 0 16px 0;
+    }
+  }
+
+  .task_details__info {
+    @include init-flex-position(row);
+    @include align-items(center);
+    @include flex(1 1);
+    @include single-box-shadow(.3px, .3px, 2px, .15px, #ccc);
+    background: #EBE5D5;
+    border: 1px solid #ccc;
+    color: #777;
+    font-size: 11pt;
+    margin: 24px 16px 48px 16px;
+    padding: 8px;
+
+    .task__executors {
+      color: #29872C;
+      font-size: 12pt;
+      padding: 0 4px;
+    }
+
+    .task__creator__title {
+      color: #777;
+    }
+
+    .task__creator {
+      @include flex(1 1);
+      color: #CC6A54;
+      padding-left: 24px;
+    }
+
+    .task__status {
+      margin: 2px 4px;
+      padding: 2px 8px;
+    }
+
+    @mixin task-status-item-default {
+      @include noselect;
+      border: 1px solid #888;
+      border-radius: 2px;
+      font-size: 12pt;
+      padding: 4px;
+      text-decoration: none;
+    }
+
+    .task__status__item {
+      @include task-status-item-default;
+      @include single-box-shadow(.3px, .3px, 2px, .1px, #aaa);
+      background: #7397D1;
+      border: 1px solid darken(#7397D1, 6%);
+      color: #eee;
+      cursor: pointer;
+      cursor: hand;
+    }
+
+    .task__status__item__active {
+      @include task-status-item-default;
+      background: #B1BCCC;
+      border: 1px solid darken(#B1BCCC, 6%);
+      color: #888;
+      cursor: default;
+    }
+  }
+}
+
+hr {
+  border-color: #f5f5f5;
+  margin: 0;
+  width: auto;
+}
+
+.comments_container {
+  @include flex(1 1);
+  //border: 1px solid darken($body-background-color, 4%);
+}
+
+.create_comment_form {
+  @include init-flex-position(column);
+  background: #fff;
+  border: 1px solid #ddd;
+  margin: 36px 64px 0 64px;
+  padding: 24px;
+
+  .comments_counter {
+    color: #F27544;
+    margin: 0 0 10px 2px;
+    text-decoration: underline;
+  }
+
+  form {
+    @include init-flex-position(column);
+
+    textarea {
+      color: #666;
+      min-height: 40px;
+    }
+
+    #add_comment_submit {
+      @include align-self(flex-end);
+      @include single-box-shadow(.3px, .3px, 2px, .3px, #bbb);
+      background: #749973;
+      border: 1px solid darken(#749973, 6%);
+      color: white;
+      cursor: pointer;
+      font-family: 'Andada SC', andadaregular, sans-serif;
+      font-size: 11pt;
+      margin-top: 6px;
+      padding: 8px;
+      width: 140px;
+    }
+  }
+}
+
+.comments {
+  @include init-flex-position(column);
+  background: #fafafa;
+  border: 1px solid darken(#fafafa, 10%);
+  border-top: 0;
+  margin: 0 65px 36px 65px;
+  min-height: 120px;
+  padding: 0 12px 36px 12px;
+
+  .note_no_comments {
+    @include flex(1 1);
+    color: #666;
+    margin: auto;
+    max-height: 20px;
+  }
+
+  .comment_item {
+    @include init-flex-position(column);
+    background: #fff;
+    border: 1px solid darken(#fff, 10%);
+    color: #666;
+    margin-top: 24px;
+    padding: 8px;
+
+    .comment_item__title {
+      @include init-flex-position(row);
+      @include justify-content(space-between);
+      @include align-items(center);
+      border-bottom: 1px solid #888;
+    }
+
+    .comment_item__title__author {
+      color: #315085;
+      margin-right: 12px;
+    }
+
+    .title_separator {
+      color: #323E57;
+      font-size: 6pt;
+      text-align: center;
+    }
+
+    .comment_item__title__created {
+      @include flex(1 1);
+      color: #CC6B4E;
+      font-size: 10pt;
+      margin-left: 12px;
+    }
+
+    .comment_item__body {
+      padding: 12px 16px 8px 16px;
+      text-align: justify;
+    }
+  }
+
+  .edit_comment_btn, .del_comment_btn {
+    cursor: hand;
+    cursor: pointer;
+    margin: 0 3px;
+
+    img {
+      height: 12px;
+      width: auto;
+    }
+  }
+
+  .edit_comment_form {
+    @include init-flex-position(column);
+    @include flex-wrap(wrap);
+    background: #fff;
+
+    textarea {
+      background: #F5F7FA;
+      border: 1px solid #9DAEC4;
+      color: #666;
+      margin-bottom: 10px;
+      padding: 8px;
+      text-align: justify;
+    }
+
+    .edit_comments_form__btns {
+      @include init-flex-position(row);
+      @include align-items(center);
+      @include align-self(flex-end);
+    }
+
+    a {
+      @include single-box-shadow(.2px, .2px, 2px, .1px, #bbb);
+      border: 1px solid;
+      color: #fff;
+      cursor: hand;
+      cursor: pointer;
+      margin: 0 2px;
+      padding: 4px 0;
+      text-align: center;
+      text-decoration: none;
+      width: 90px;
+    }
+
+    #edit_comment_submit {
+      background: #F2D680;
+      border-color: darken(#F2D680, 8%);
+    }
+
+    #edit_comment_cancel {
+      background: #C4C4C4;
+      border-color: darken(#C4C4C4, 8%);
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}

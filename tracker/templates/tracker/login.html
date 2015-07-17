@@ -1,0 +1,15 @@
+{% extends "tracker/bbase.html" %}
+{% load static %}
+
+{% block extrastyle %}
+	<link rel="stylesheet" type="text/css" href="{% static "tracker/css/task_details.css" %}"/>
+{% endblock %}
+
+{% block page-content %}
+	<form action="" method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit">Login</button>
+	</form>
+{% endblock %}
+
