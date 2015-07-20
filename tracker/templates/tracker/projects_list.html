@@ -45,10 +45,10 @@
 							<div class="dev_item">
 								<span class="user_name">{{ user_full_name }}</span>
 								{% if dev.user in project_developers %}
-									<a href="{% url "tracker:del_dev_from_project" current_project_id dev.id %}?referer={{ request.path }}"
+									<a href="{% url "tracker:del_dev_from_project" current_project_id dev.user_id %}?referer={{ request.path }}"
 									   class="delete_from_project">Delete from project</a>
 								{% else %}
-									<a href="{% url "tracker:add_dev_to_project" current_project_id dev.id %}?referer={{ request.path }}"
+									<a href="{% url "tracker:add_dev_to_project" current_project_id dev.user_id %}?referer={{ request.path }}"
 									   class="add_to_project">Add to project</a>
 								{% endif %}
 							</div>
@@ -60,7 +60,7 @@
 							<div class="dev_item">
 								<span class="user_name">{{ user_full_name }}</span>
 								{% if dev in project_developers %}
-									<a href="{% url "tracker:del_dev_from_project" current_project_id dev.id %}?referer={{ request.path }}"
+									<a href="{% url "tracker:del_dev_from_project" current_project_id dev.user_id %}?referer={{ request.path }}"
 									   class="delete_from_project">Delete from project</a>
 								{% endif %}
 							</div>

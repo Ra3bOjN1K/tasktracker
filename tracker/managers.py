@@ -12,7 +12,8 @@ class DevelopersManager(models.Manager):
     def search_developers(self, search_data):
         developers = self.all().filter(
             Q(user__first_name__istartswith=search_data) |
-            Q(user__last_name__istartswith=search_data))
+            Q(user__last_name__istartswith=search_data) |
+            Q(user__username__istartswith=search_data))
         return developers
 
 
@@ -29,8 +30,6 @@ class ProjectObjManager(models.Manager):
             projects = (self.all()
                         .filter(members__id__exact=user.id)
                         .order_by('created'))
-        elif user.is_staff:
-            projects = self.all().order_by('created')
         else:
             raise TypeError('User group is not defined...')
         return projects

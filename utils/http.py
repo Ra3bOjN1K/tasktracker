@@ -1,3 +1,6 @@
+#!/usr/bin/env python3.4
+# -*- coding: utf-8 -*-
+
 from django.http import HttpResponse
 from rest_framework.renderers import JSONRenderer
 

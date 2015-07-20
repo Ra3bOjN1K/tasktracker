@@ -9,7 +9,7 @@ from tracker.models import get_manager_group, get_developer_group, Project, \
     Task, Comment
 
 
-class SignUpForm(forms.Form):
+class SignUpForm(UserCreationForm):
     ROLE_CHOICES = (
         ('MAN', 'Manager'),
         ('DEV', 'Developer'),
@@ -25,20 +25,31 @@ class SignUpForm(forms.Form):
         for fieldname in ['username', 'password1', 'password2']:
             self.fields[fieldname].help_text = None
 
-    def signup(self, request, user):
-        # user.is_active = False
-        user.email = self.cleaned_data['email']
-        user.first_name = self.cleaned_data['first_name']
-        user.last_name = self.cleaned_data['last_name']
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        username = self.cleaned_data.get('username')
+        if email and User.objects.filter(email=email).exclude(username=username).count():
+            raise forms.ValidationError('Email addresses must be unique.')
+        return email
 
-        user.save()
-        if self.cleaned_data['role'] == 'MAN':
-            group = get_manager_group()
-        elif self.cleaned_data['role'] == 'DEV':
-            group = get_developer_group()
-        else:
-            raise TypeError()
-        group.user_set.add(user)
+    def save(self, commit=True):
+        user = super(SignUpForm, self).save(commit)
+        if user:
+            user.is_active = False
+            user.username = self.cleaned_data['username']
+            user.email = self.cleaned_data['email']
+            user.first_name = self.cleaned_data['first_name']
+            user.last_name = self.cleaned_data['last_name']
+            user.set_password(self.cleaned_data['password1'])
+            user.save()
+            if self.cleaned_data['role'] == 'MAN':
+                group = get_manager_group()
+            elif self.cleaned_data['role'] == 'DEV':
+                group = get_developer_group()
+            else:
+                raise TypeError("Role '{0}' doesn't supported..".format(self.cleaned_data['role']))
+            group.user_set.add(user)
+        return user
 
 
 class CreateProjectForm(forms.ModelForm):

@@ -37,9 +37,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
     'tracker',
     'djcelery',
 )
@@ -70,24 +67,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # `allauth` specific context processors
-                'allauth.account.context_processors.account',
-                'allauth.socialaccount.context_processors.socialaccount',
             ],
         },
     },
 ]
-
-AUTHENTICATION_BACKENDS = (
-
-    # Needed to login by username in Django admin, regardless of `allauth`
-    'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
-)
-
-SITE_ID = 1
 
 WSGI_APPLICATION = 'tasktracker.wsgi.application'
 
@@ -142,21 +125,15 @@ CELERY_SEND_EVENTS = True
 CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
 
 
-# allauth settings
+LOGIN_URL = "/login/"
 
-ACCOUNT_SIGNUP_FORM_CLASS = 'tracker.forms.SignUpForm'
+CURRENT_SITE_DOMAIN = 'http://127.0.0.1:8000'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'prorab.ks@gmail.com'
 EMAIL_HOST_PASSWORD = 'programmer'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-
-ACCOUNT_EMAIL_REQUIRED = True
-LOGIN_REDIRECT_URL = '/projects/'
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 
 
 import djcelery

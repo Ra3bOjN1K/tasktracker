@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from collections import OrderedDict
+from datetime import datetime
 
 from django.db import models
 from django.db.models import Q
@@ -10,9 +11,14 @@ from django.db.models.signals import post_save
 
 from tracker.managers import DevelopersManager, ProjectManagersManager, \
     ProjectObjManager
+from tracker.tasks import send_confirm_email
+
+from utils.data import random_string_generator
 
 
 class TrackerUser(models.Model):
+    _key = models.CharField(max_length=64, editable=False, unique=True)
+    sent_confirm_date = models.DateTimeField(editable=False, null=True, blank=True)
     user = models.OneToOneField(User, unique=True, related_name='profile')
     objects = models.Manager()
     developers = DevelopersManager()
@@ -34,6 +40,27 @@ class TrackerUser(models.Model):
         else:
             tasks = Task.objects.filter(project__pk=project_id).order_by('-created')
         return tasks
+
+    def activate(self, commit=True):
+        self.user.is_active = True
+        if commit:
+            self.user.save()
+
+    def deactivate(self, commit=True):
+        self.user.is_active = False
+        if commit:
+            self.user.save()
+
+    def send_email_confirmation(self, commit=True):
+        self._key = random_string_generator()
+        if not self.sent_confirm_date:
+            self.sent_confirm_date = datetime.now()
+        if commit:
+            self.save()
+        send_confirm_email.delay(self)
+
+    def save(self, *args, **kwargs):
+        super(TrackerUser, self).save(*args, **kwargs)
 
 
 class Project(models.Model):

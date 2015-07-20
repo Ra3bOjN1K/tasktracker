@@ -1,18 +1,81 @@
 # -*- coding: utf-8 -*-
 
 from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import redirect
 from django.views.generic import ListView, RedirectView, DetailView
 from django.views.generic.edit import FormView, View, CreateView
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, logout
 
 from tracker.models import Project, Task, Comment, TrackerUser
-from tracker.forms import CreateProjectForm, CreateTaskForm, \
-    DeveloperSearchForm, CreateCommentForm
+from tracker.forms import CreateProjectForm, CreateTaskForm, DeveloperSearchForm, \
+    CreateCommentForm, SignUpForm
 from tracker.serializers import TaskSerializers
-from utils.http import JSONResponse
+from utils import http
+
+
+def tracker_user_required(login_url=None):
+    return user_passes_test(lambda u: hasattr(u, 'profile'), login_url=login_url)
+
+
+class RegisterFormView(FormView):
+    form_class = SignUpForm
+    success_url = "/verification/"
+    template_name = "tracker/authorization/register.html"
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            raise Http404()
+        return super(RegisterFormView, self).get(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        user = form.save()
+        if not user.profile.sent_confirm_date:
+            user.profile.send_email_confirmation()
+        return super(RegisterFormView, self).form_valid(form)
+
+
+class LoginFormView(FormView):
+    form_class = AuthenticationForm
+    template_name = "tracker/authorization/login.html"
+    success_url = "/"
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            raise Http404()
+        return super(LoginFormView, self).get(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        self.user = form.get_user()
+        login(self.request, self.user)
+        return super(LoginFormView, self).form_valid(form)
+
+
+class ConfirmEmailView(RedirectView):
+    url = '/'
+    permanent = False
+
+    def get_redirect_url(self, *args, **kwargs):
+        if 'key' in kwargs:
+            try:
+                tracker_user = TrackerUser.objects.get(_key=kwargs['key'])
+            except TrackerUser.DoesNotExist:
+                tracker_user = None
+
+            if tracker_user and not tracker_user.user.is_active:
+                tracker_user.activate()
+        return super(ConfirmEmailView, self).get_redirect_url(*args, **kwargs)
+
+
+class LogoutView(View):
+    def get(self, request):
+        if not request.user.is_authenticated():
+            raise Http404()
+        logout(request)
+        return HttpResponseRedirect("/")
 
 
 class ProjectsListView(ListView):
@@ -20,6 +83,7 @@ class ProjectsListView(ListView):
     template_name = 'tracker/projects_list.html'
 
     @method_decorator(login_required)
+    @method_decorator(tracker_user_required())
     @method_decorator(permission_required('tracker.view_projects',
                                           raise_exception=True))
     def dispatch(self, *args, **kwargs):
@@ -99,7 +163,6 @@ class SearchDevelopersView(RedirectView):
 
 
 class ProjectDevelopersAddView(View):
-
     @method_decorator(login_required)
     @method_decorator(permission_required('tracker.add_developer',
                                           raise_exception=True))
@@ -114,7 +177,6 @@ class ProjectDevelopersAddView(View):
 
 
 class ProjectDevelopersDeleteView(View):
-
     @method_decorator(login_required)
     @method_decorator(permission_required('tracker.add_developer',
                                           raise_exception=True))
@@ -129,7 +191,6 @@ class ProjectDevelopersDeleteView(View):
 
 
 class TasksFilterView(View):
-
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(TasksFilterView, self).dispatch(*args, **kwargs)
@@ -139,7 +200,7 @@ class TasksFilterView(View):
             project_id=request.POST['project_id'],
             filter=request.POST['filter'])
         serializer = TaskSerializers(tasks, many=True)
-        return JSONResponse(serializer.data)
+        return http.JSONResponse(serializer.data)
 
 
 class TaskDetailsView(DetailView):
@@ -164,7 +225,6 @@ class TaskDetailsView(DetailView):
 
 
 class TaskStatusUpdateView(View):
-
     @method_decorator(login_required)
     @method_decorator(permission_required('tracker.change_task_status',
                                           raise_exception=True))
@@ -175,11 +235,10 @@ class TaskStatusUpdateView(View):
         task = Task.objects.get(pk=request.POST['task_id'])
         task.status = request.POST['status']
         task.save()
-        return JSONResponse('success')
+        return http.JSONResponse('success')
 
 
 class CommentAddView(View):
-
     @method_decorator(login_required)
     @method_decorator(permission_required('tracker.create_comment',
                                           raise_exception=True))
@@ -187,17 +246,18 @@ class CommentAddView(View):
         return super(CommentAddView, self).dispatch(*args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        comment = Comment()
-        comment.author = request.user
-        comment.task = Task.objects.get(pk=kwargs['pk'])
-        comment.text = request.POST['text']
-        comment.save()
+        comment_body = request.POST['text'].strip()
+        if comment_body:
+            comment = Comment()
+            comment.author = request.user
+            comment.task = Task.objects.get(pk=kwargs['pk'])
+            comment.text = comment_body
+            comment.save()
         return HttpResponseRedirect(reverse('tracker:task_details_view',
                                             args=[kwargs['pk']]))
 
 
 class CommentDeleteView(View):
-
     @method_decorator(login_required)
     @method_decorator(permission_required('tracker.del_comment',
                                           raise_exception=True))
@@ -212,7 +272,6 @@ class CommentDeleteView(View):
 
 
 class CommentUpdateView(View):
-
     @method_decorator(login_required)
     @method_decorator(permission_required('tracker.update_comment',
                                           raise_exception=True))
@@ -223,4 +282,4 @@ class CommentUpdateView(View):
         comment = Comment.objects.get(pk=request.POST['comment_id'])
         comment.text = request.POST['comment_body']
         comment.save()
-        return JSONResponse({'status': 'success', 'comment_body': comment.text})
+        return http.JSONResponse({'status': 'success', 'comment_body': comment.text})

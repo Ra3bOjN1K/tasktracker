@@ -17,10 +17,10 @@
 				</div>
 				<div class="user-control-panel">
 					{% if not user.is_authenticated %}
-						<a class="ctrl-btn" href="{{ signup_url }}">Sign up</a>
-						<a class="ctrl-btn" href="{{ login_url }}">Login</a>
+						<a class="ctrl-btn" href="{% url "tracker:sign_up" %}">Sign up</a>
+						<a class="ctrl-btn" href="{% url "tracker:login" %}">Login</a>
 					{% else %}
-						<a class="ctrl-btn" href="{% url 'account_logout' %}">Logout</a>
+						<a class="ctrl-btn" href="{% url "tracker:logout" %}">Logout</a>
 					{% endif %}
 				</div>
 			{% endblock %}
