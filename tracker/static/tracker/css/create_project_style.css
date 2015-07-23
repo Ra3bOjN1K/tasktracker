@@ -1,0 +1,113 @@
+.prev_page_btn {
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  display: -ms-flexbox;
+  -ms-flex-direction: row;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  -webkit-align-items: center;
+  align-items: center;
+  -moz-box-shadow: 0.3px 0.3px 2px 0.3px #aaa;
+  -webkit-box-shadow: 0.3px 0.3px 2px 0.3px #aaa;
+  box-shadow: 0.3px 0.3px 2px 0.3px #aaa;
+  background: #666;
+  border: 1px solid #444;
+  color: white;
+  height: 24px;
+  padding: 6px;
+  position: fixed;
+  text-decoration: none;
+  top: 64px;
+  width: 80px;
+}
+.prev_page_btn img {
+  margin-right: 8px;
+}
+
+html, body {
+  height: 100%;
+}
+
+.page-content {
+  -webkit-flex: 1 1;
+  flex: 1 1;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  display: -ms-flexbox;
+  -ms-flex-direction: column;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  min-height: 500px;
+}
+
+.create_new_project_form {
+  -webkit-align-self: center;
+  align-self: center;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  display: -ms-flexbox;
+  -ms-flex-direction: column;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  -moz-box-shadow: 0.3px 0.3px 12px 0.6px #ddd;
+  -webkit-box-shadow: 0.3px 0.3px 12px 0.6px #ddd;
+  box-shadow: 0.3px 0.3px 12px 0.6px #ddd;
+  background: #E1E4E8;
+  border: 1px solid #d0d4db;
+  border-radius: 4px;
+  margin-top: -50px;
+  padding: 36px 36px 16px 36px;
+}
+.create_new_project_form .new_project__name__label, .create_new_project_form .new_project__description__label {
+  color: #6D7D8F;
+  font-size: 12pt;
+}
+.create_new_project_form input, .create_new_project_form textarea {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #666;
+  font-family: 'Andada SC', andadaregular, sans-serif;
+  font-size: 15pt;
+  padding: 0 8px;
+  width: 100%;
+}
+.create_new_project_form textarea {
+  height: 156px;
+  padding: 8px;
+}
+.create_new_project_form .new_project__name input {
+  height: 36px;
+}
+.create_new_project_form button {
+  -webkit-align-self: center;
+  align-self: center;
+  -moz-box-shadow: 0.3px 0.3px 2px 0.3px #bbb;
+  -webkit-box-shadow: 0.3px 0.3px 2px 0.3px #bbb;
+  box-shadow: 0.3px 0.3px 2px 0.3px #bbb;
+  background: #607E9E;
+  border: 1px solid #546f8b;
+  color: #eee;
+  cursor: hand;
+  cursor: pointer;
+  font-size: 16px;
+  height: 44px;
+  margin-top: 8px;
+  width: 144px;
+}
