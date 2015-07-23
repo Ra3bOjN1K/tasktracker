@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html>
-	<head lang="en">
-		<meta charset="UTF-8">
-		<title></title>
-	</head>
-	<body>
-		<h1>Qwerty asduyti pasfpsuf!!!</h1>
-	</body>
-</html>
+{% extends "tracker/bbase.html" %}
+{% load static %}
+
+{% block extrastyle %}
+	<link rel="stylesheet" type="text/css" href="{% static "tracker/css/authorization.css" %}"/>
+{% endblock %}
+
+{% block page-content %}
+	<h1 class="sent_email_confirm_note">Sent email to confirm your registration data.</h1>
+{% endblock %}

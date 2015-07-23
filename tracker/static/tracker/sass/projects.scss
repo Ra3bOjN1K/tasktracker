@@ -5,6 +5,7 @@
   @include init-flex-position(column);
   @include flex(1 1);
   @include single-box-shadow(.3px, .3px, 2px, .3px, #ddd);
+  min-width: 320px;
 }
 
 .projects_control {

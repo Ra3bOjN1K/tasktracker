@@ -1,3 +1,33 @@
+.prev_page_btn {
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  display: -ms-flexbox;
+  -ms-flex-direction: row;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  -webkit-align-items: center;
+  align-items: center;
+  -moz-box-shadow: 0.3px 0.3px 2px 0.3px #aaa;
+  -webkit-box-shadow: 0.3px 0.3px 2px 0.3px #aaa;
+  box-shadow: 0.3px 0.3px 2px 0.3px #aaa;
+  background: #666;
+  border: 1px solid #444;
+  color: white;
+  height: 24px;
+  padding: 6px;
+  position: fixed;
+  text-decoration: none;
+  top: 64px;
+  width: 80px;
+}
+.prev_page_btn img {
+  margin-right: 8px;
+}
+
 .projects {
   display: -moz-box;
   -moz-box-orient: vertical;
@@ -14,6 +44,7 @@
   -moz-box-shadow: 0.3px 0.3px 2px 0.3px #ddd;
   -webkit-box-shadow: 0.3px 0.3px 2px 0.3px #ddd;
   box-shadow: 0.3px 0.3px 2px 0.3px #ddd;
+  min-width: 320px;
 }
 
 .projects_control {

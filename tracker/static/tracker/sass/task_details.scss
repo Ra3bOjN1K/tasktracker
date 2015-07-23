@@ -1,23 +1,5 @@
 @import 'settings';
 
-.prev_page_btn {
-  @include init-flex-position(row);
-  @include align-items(center);
-  @include single-box-shadow(.3px, .3px, 2px, .3px, #aaa);
-  background: #666;
-  border: 1px solid #444;
-  color: white;
-  height: 24px;
-  padding: 6px;
-  position: fixed;
-  text-decoration: none;
-  width: 80px;
-
-  img {
-    margin-right: 8px;
-  }
-}
-
 .task_container {
   @include init-flex-position(column);
   margin: 24px auto;

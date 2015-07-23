@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 Django settings for tasktracker project.
 
@@ -82,8 +84,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tasktracker_db',
-        'USER': 'tracker_admin',
-        'PASSWORD': '12345',
+        'USER': 'root',
+        'PASSWORD': '1234',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
         'PORT': '8000',
     }
@@ -109,31 +111,34 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'tracker', 'static')]
+# STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static/')
 
 
 # celery settings
 
 # redis server address
 BROKER_URL = 'redis://localhost:6379/0'
-# храним результаты выполнения задач в redis
+
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-# срок хранения результатов, после чего они удаляются
+
 CELERY_TASK_RESULT_EXPIRES = 7*86400  # 7 days
-# для мониторинга воркеров
+
 CELERY_SEND_EVENTS = True
-# место хранения периодических задач (данные для планировщика)
+
 CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
 
 
 LOGIN_URL = "/login/"
 
-CURRENT_SITE_DOMAIN = 'http://127.0.0.1:8000'
+CURRENT_SITE_DOMAIN = 'http://104.236.102.103:4512'
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'prorab.ks@gmail.com'
-EMAIL_HOST_PASSWORD = 'programmer'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+DEFAULT_FROM_EMAIL = 'konstantin@tasktracker.com'
 
 
 import djcelery

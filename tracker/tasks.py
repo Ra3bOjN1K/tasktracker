@@ -1,3 +1,4 @@
+#!/usr/bin/env python3.4
 # -*- coding: utf-8 -*-
 
 from django.core.mail import send_mail
@@ -17,4 +18,4 @@ def send_confirm_email(tracker_user):
               "to {confirm_url}".format(username=tracker_user.user.username, domain=current_site_domain,
                                         confirm_url=confirm_url)
 
-    send_mail(subject, message, 'Awesome user', [tracker_user.user.email])
+    send_mail(subject, message, settings.EMAIL_HOST_USER, [tracker_user.user.email])

@@ -14,16 +14,25 @@ class SignUpForm(UserCreationForm):
         ('MAN', 'Manager'),
         ('DEV', 'Developer'),
     )
-    first_name = forms.CharField(max_length=40)
-    last_name = forms.CharField(max_length=40)
-    email = forms.EmailField(required=True)
+    username = forms.CharField(max_length=40, widget=forms.TextInput(
+        attrs={'placeholder': 'Enter your username'}))
+    first_name = forms.CharField(max_length=40, widget=forms.TextInput(
+        attrs={'placeholder': 'Enter your first name'}))
+    last_name = forms.CharField(max_length=40, widget=forms.TextInput(
+        attrs={'placeholder': 'Enter your last name'}))
+    email = forms.EmailField(required=True, widget=forms.TextInput(
+        attrs={'placeholder': 'Enter your email'}))
     role = forms.ChoiceField(choices=ROLE_CHOICES)
 
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)
 
-        for fieldname in ['username', 'password1', 'password2']:
-            self.fields[fieldname].help_text = None
+        self.fields['username'].widget = forms.TextInput(
+            attrs={'placeholder': 'Enter your username'})
+        self.fields['password1'].widget = forms.PasswordInput(
+            attrs={'placeholder': 'Enter your password'})
+        self.fields['password2'].widget = forms.PasswordInput(
+            attrs={'placeholder': 'Confirm password'})
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -56,6 +65,11 @@ class CreateProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ('name', 'description')
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Enter a project name'}),
+            'description': forms.Textarea(attrs={'placeholder': 'Project description',
+                                                 'style': 'resize:none'}),
+        }
 
     def save(self, user=None, commit=True):
         project = super(CreateProjectForm, self).save(commit=False)

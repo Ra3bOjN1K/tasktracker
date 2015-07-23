@@ -20,6 +20,7 @@ body {
   border: 1px solid #323E57;
   height: 48px;
   margin-bottom: 10px;
+  min-height: 48px;
 
   .logo {
     color: #eee;
@@ -34,9 +35,11 @@ body {
 
     .ctrl-btn {
       @include noselect;
+      @include single-box-shadow(.3px, .3px, 2px, .3px, #666);
       background: #E0BD84;
-      border: 1px solid #666;
+      border: 1px solid #444;
       color: #315085;
+      //margin: 0 1px;
       padding: 6px;
       text-decoration: none;
     }

@@ -2,13 +2,26 @@
 {% load static %}
 
 {% block extrastyle %}
-	<link rel="stylesheet" type="text/css" href="{% static "tracker/css/task_details.css" %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static "tracker/css/authorization.css" %}"/>
 {% endblock %}
 
 {% block page-content %}
-	<form action="" method="post">
+
+	<form action="" method="post" autocomplete="off">
 		{% csrf_token %}
-		{{ form.as_p }}
+		{% for field in form %}
+			<div class="field_label">
+				{{ field.label }}
+			</div>
+			<div class="register__{{ field.label }}">
+				{{ field }}
+			</div>
+			{% if field.errors %}
+				<div class="field_error">
+					{{ field.errors|striptags }}
+				</div>
+			{% endif %}
+		{% endfor %}
 		<button type="submit">Login</button>
 	</form>
 {% endblock %}

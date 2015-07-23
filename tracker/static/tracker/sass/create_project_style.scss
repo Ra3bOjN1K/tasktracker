@@ -1,0 +1,61 @@
+@import 'settings';
+
+html, body {
+  height: 100%;
+}
+
+.page-content {
+  @include flex(1 1);
+  @include init-flex-position(column);
+  @include align-items(center);
+  @include justify-content(center);
+  min-height: 500px;
+}
+
+.create_new_project_form {
+  @include align-self(center);
+  @include init-flex-position(column);
+  @include single-box-shadow(.3px, .3px, 12px, .6px, #ddd);
+  background: #E1E4E8;
+  border: 1px solid darken(#E1E4E8, 6%);
+  border-radius: 4px;
+  margin-top: -50px;
+  padding: 36px 36px 16px 36px;
+
+  .new_project__name__label, .new_project__description__label {
+    color: #6D7D8F;
+    font-size: 12pt;
+  }
+
+  input, textarea {
+    @include box-sizing(border-box);
+    color: #666;
+    font-family: 'Andada SC', andadaregular, sans-serif;
+    font-size: 15pt;
+    padding: 0 8px;
+    width: 100%;
+  }
+
+  textarea {
+    height: 156px;
+    padding: 8px;
+  }
+
+  .new_project__name input {
+    height: 36px;
+  }
+
+  button {
+    @include align-self(center);
+    @include single-box-shadow(.3px, .3px, 2px, .3px, #bbb);
+    background: #607E9E;
+    border: 1px solid darken(#607E9E, 6%);
+    color: #eee;
+    cursor: hand;
+    cursor: pointer;
+    font-size: 16px;
+    height: 44px;
+    margin-top: 8px;
+    width: 144px;
+  }
+}

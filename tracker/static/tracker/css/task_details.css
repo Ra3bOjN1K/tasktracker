@@ -21,6 +21,7 @@
   padding: 6px;
   position: fixed;
   text-decoration: none;
+  top: 64px;
   width: 80px;
 }
 .prev_page_btn img {

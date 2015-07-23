@@ -57,7 +57,7 @@ class TrackerUser(models.Model):
             self.sent_confirm_date = datetime.now()
         if commit:
             self.save()
-        # send_confirm_email.delay(self)
+        send_confirm_email.delay(self)
 
     def save(self, *args, **kwargs):
         super(TrackerUser, self).save(*args, **kwargs)

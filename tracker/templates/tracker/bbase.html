@@ -17,8 +17,12 @@
 				</div>
 				<div class="user-control-panel">
 					{% if not user.is_authenticated %}
-						<a class="ctrl-btn" href="{% url "tracker:sign_up" %}">Sign up</a>
-						<a class="ctrl-btn" href="{% url "tracker:login" %}">Login</a>
+						{% if request.path != '/registration/' %}
+							<a class="ctrl-btn" href="{% url "tracker:sign_up" %}">Sign up</a>
+						{% endif %}
+						{% if request.path != '/login/' %}
+							<a class="ctrl-btn" href="{% url "tracker:login" %}">Login</a>
+						{% endif %}
 					{% else %}
 						<a class="ctrl-btn" href="{% url "tracker:logout" %}">Logout</a>
 					{% endif %}

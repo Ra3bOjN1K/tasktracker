@@ -48,4 +48,23 @@
   ));
 }
 
+.prev_page_btn {
+  @include init-flex-position(row);
+  @include align-items(center);
+  @include single-box-shadow(.3px, .3px, 2px, .3px, #aaa);
+  background: #666;
+  border: 1px solid #444;
+  color: white;
+  height: 24px;
+  padding: 6px;
+  position: fixed;
+  text-decoration: none;
+  top: 64px;
+  width: 80px;
+
+  img {
+    margin-right: 8px;
+  }
+}
+
 $body-background-color: #efefef;
